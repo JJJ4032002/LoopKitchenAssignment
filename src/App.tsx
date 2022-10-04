@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { createTheme } from "@mui/material/styles";
+import React, { useEffect, useState } from "react";
+import { ThemeProvider } from "styled-components/macro";
+import { ThemeProvider as MaterialThemeProvider } from "@emotion/react";
+import CssBaseline from "@mui/material/CssBaseline";
+import "./App.css";
+import SignIn from "./Components/SignIn/SignIn";
 function App() {
+  const [mode, setMode] = useState<"light" | "dark">("light");
+  function toggleColorMode() {
+    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  }
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          primary: {
+            main: "#de4d86",
+          },
+          contrastThreshold: 3,
+          // Used by the functions below to shift a color's luminance by approximately
+          // two indexes within its tonal palette.
+          // E.g., shift from Red 500 to Red 300 or Red 700.
+          tonalOffset: 0.2,
+        },
+      }),
+    [mode]
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MaterialThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline></CssBaseline>
+        <div className="App">
+          <SignIn mode={mode} ToggleFunction={toggleColorMode}></SignIn>
+        </div>
+      </ThemeProvider>
+    </MaterialThemeProvider>
   );
 }
 
