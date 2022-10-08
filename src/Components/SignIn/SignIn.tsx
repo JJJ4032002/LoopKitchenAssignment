@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Burger from "../../assets/Images/Burger.png";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -6,8 +6,17 @@ import IconButton from "@mui/material/IconButton";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { GetUserData, UserRecordsType } from "../../helpers/GetUserData";
-import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { ThemeContext } from "../../Contexts/Theme";
+import {
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  Snackbar,
+} from "@mui/material";
 import {
   FlexContainer,
   FlexItems,
@@ -19,15 +28,12 @@ import {
   Image,
 } from "./SignInCss";
 
-function SignIn({
-  mode,
-  ToggleFunction,
-}: {
-  mode: string;
-  ToggleFunction: () => void;
-}) {
+function SignIn() {
+  let navigate = useNavigate();
+  let { mode, toggleColorMode } = useContext(ThemeContext);
   let [userData, setUserData] = useState({ name: "", password: "" });
   let [userRecords, setUserRecords] = useState<UserRecordsType[] | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
   let [open, setOpen] = useState(false);
   function handleOpen(state: boolean) {
     setOpen(state);
@@ -49,8 +55,19 @@ function SignIn({
     });
     if (ifFound === undefined) {
       handleOpen(true);
+    } else {
+      navigate("/home");
     }
   }
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   useEffect(() => {
     let ignore = false;
@@ -71,7 +88,7 @@ function SignIn({
     <Wrapper>
       <Nav>
         <Heading className="Primary">Loop Kitchen</Heading>
-        <IconButton onClick={ToggleFunction}>
+        <IconButton onClick={toggleColorMode}>
           {mode === "light" ? (
             <Brightness4Icon></Brightness4Icon>
           ) : (
@@ -96,14 +113,29 @@ function SignIn({
                 label="User Name"
                 variant="outlined"
               ></TextField>
-              <TextField
-                value={userData.password}
-                onChange={handleOnChangeInput}
-                name="password"
-                label="Password"
-                id="password"
-                variant="outlined"
-              ></TextField>
+              <FormControl sx={{ width: "100%" }} variant="outlined">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                  value={userData.password}
+                  type={showPassword ? "text" : "password"}
+                  onChange={handleOnChangeInput}
+                  name="password"
+                  id="password"
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                ></OutlinedInput>
+              </FormControl>
               <Button
                 disabled={disabled}
                 onClick={handleOnsubmit}
