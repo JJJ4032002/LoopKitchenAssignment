@@ -2,6 +2,7 @@
   "name": "loop-kitchen-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://JJJ4032002.github.io/LoopKitchenAssignment",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
