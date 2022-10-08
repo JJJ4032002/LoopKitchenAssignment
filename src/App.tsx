@@ -1,40 +1,53 @@
-import { createTheme } from "@mui/material/styles";
-import React, { useEffect, useState } from "react";
+import { Theme } from "@mui/material/styles";
+import React, { useContext, useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components/macro";
 import { ThemeProvider as MaterialThemeProvider } from "@emotion/react";
 import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 import SignIn from "./Components/SignIn/SignIn";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import Home from "./Components/Home/Home";
+import Restaurants from "./Components/Restaurants/Restaurants";
+import { ThemeContext } from "./Contexts/Theme";
+import { RestaurantsData } from "./Contexts/RestaurantsData";
 function App() {
-  const [mode, setMode] = useState<"light" | "dark">("light");
-  function toggleColorMode() {
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-  }
+  let location = useLocation();
+  let { theme } = useContext(ThemeContext);
+  const [FirstLoad, setFirstLoad] = useState(true);
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          primary: {
-            main: "#de4d86",
-          },
-          contrastThreshold: 3,
-          // Used by the functions below to shift a color's luminance by approximately
-          // two indexes within its tonal palette.
-          // E.g., shift from Red 500 to Red 300 or Red 700.
-          tonalOffset: 0.2,
-        },
-      }),
-    [mode]
-  );
+  let [open, setOpen] = useState(false);
+  function handleOpen(state: boolean) {
+    setOpen(state);
+  }
+  useEffect(() => {
+    if (FirstLoad) {
+      setFirstLoad(false);
+    }
+  }, [FirstLoad]);
+
   return (
     <MaterialThemeProvider theme={theme}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={theme as Theme}>
         <CssBaseline></CssBaseline>
-        <div className="App">
-          <SignIn mode={mode} ToggleFunction={toggleColorMode}></SignIn>
-        </div>
+        {FirstLoad && location.pathname === "/" && (
+          <Navigate to={"/login"}></Navigate>
+        )}
+        <RestaurantsData>
+          <div className="App">
+            <Routes>
+              <Route path={"/login"} element={<SignIn></SignIn>}></Route>
+              <Route
+                path={"/"}
+                element={<Home open={open} handleOpen={handleOpen}></Home>}
+              >
+                <Route
+                  path="home"
+                  element={<Restaurants handleOpen={handleOpen}></Restaurants>}
+                ></Route>
+              </Route>
+            </Routes>
+          </div>
+        </RestaurantsData>
       </ThemeProvider>
     </MaterialThemeProvider>
   );
