@@ -43,6 +43,15 @@ const RestaurantWrapper = styled.div`
 const Heading = styled.h1`
   color: ${(props) => props.theme.palette.primary.main};
 `;
+
+const Frame = styled.iframe`
+  width: 50%;
+`;
+const Block = styled.div``;
+const BlockHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 export {
   Heading,
   Header,
@@ -51,4 +60,7 @@ export {
   Wrapper,
   Placeholder,
   Image,
+  Frame,
+  Block,
+  BlockHeader,
 };
