@@ -3,14 +3,15 @@ import { devices } from "../../Media Queries/Queries";
 let Image = styled.img`
   width: 100%;
   display: block;
-  transition: filter 200ms ease-in;
+  transition: filter 250ms ease-in-out, transform 250ms ease-in-out;
   &:hover {
+    transform: scale(1.04);
     cursor: pointer;
     -webkit-filter: drop-shadow(
-      4px 4px 7px ${(props) => props.theme.palette.primary.main}
+      0px 0px 12px ${(props) => props.theme.palette.primary.main}
     );
     filter: drop-shadow(
-      4px 4px 7px ${(props) => props.theme.palette.primary.main}
+      0px 0px 12px ${(props) => props.theme.palette.primary.main}
     );
   }
 `;
