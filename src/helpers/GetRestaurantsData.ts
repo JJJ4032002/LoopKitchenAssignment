@@ -6,7 +6,7 @@ interface RestaurantDataType {
   };
 }
 interface NewRestaurantsDataType {
-  Name: string;
+  label: string;
 }
 async function GetRestaurantsData(): Promise<NewRestaurantsDataType[]> {
   let result = await fetch(
