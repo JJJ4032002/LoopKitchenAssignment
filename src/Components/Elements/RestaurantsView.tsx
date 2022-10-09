@@ -35,6 +35,7 @@ const Placeholder = styled.div`
 `;
 const Heading = styled.h1`
   color: ${(props) => props.theme.palette.primary.main};
+  text-align: center;
 `;
 
 function RestaurantsView({
