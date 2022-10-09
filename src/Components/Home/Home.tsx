@@ -15,7 +15,7 @@ import { Outlet } from "react-router-dom";
 import useWindowSize from "../../hooks/useWindowSize";
 import { sizes, devices } from "../../Media Queries/Queries";
 import { ThemeContext } from "../../Contexts/Theme";
-
+import { Link } from "react-router-dom";
 const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -28,6 +28,10 @@ const Wrapper = styled.div`
 const Heading = styled.h1`
   color: ${(props) => props.theme.palette.primary.main};
   padding: 0.5em 0.5em;
+`;
+const LinkTo = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `;
 function Home({
   open,
@@ -52,7 +56,7 @@ function Home({
             <Divider></Divider>
             <List>
               {MenuData.map((element) => {
-                return (
+                return element.to === null ? (
                   <ListItem
                     onClick={
                       element.Title === "Light or Dark"
@@ -87,6 +91,45 @@ function Home({
                       )}
                     </ListItemButton>
                   </ListItem>
+                ) : (
+                  <LinkTo to={element.to}>
+                    <ListItem
+                      onClick={
+                        element.Title === "Light or Dark"
+                          ? toggleColorMode
+                          : undefined
+                      }
+                      key={element.Title}
+                      disablePadding
+                    >
+                      <ListItemButton>
+                        {element.Title == "Light or Dark" ? (
+                          <>
+                            {mode === "light" ? (
+                              element.Icon()
+                            ) : (
+                              <ListItemIcon>
+                                <Brightness4Icon />
+                              </ListItemIcon>
+                            )}
+
+                            <ListItemText
+                              primary={
+                                mode === "light" ? "Light mode" : "Dark Mode"
+                              }
+                            ></ListItemText>
+                          </>
+                        ) : (
+                          <>
+                            {element.Icon()}{" "}
+                            <ListItemText
+                              primary={element.Title}
+                            ></ListItemText>
+                          </>
+                        )}
+                      </ListItemButton>
+                    </ListItem>
+                  </LinkTo>
                 );
               })}
             </List>
