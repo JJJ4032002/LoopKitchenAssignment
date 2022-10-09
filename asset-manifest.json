@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/LoopKitchenAssignment/static/css/main.424060c6.css",
-    "main.js": "/LoopKitchenAssignment/static/js/main.ddd692cd.js",
+    "main.js": "/LoopKitchenAssignment/static/js/main.a0001fa0.js",
     "static/js/787.1c799fe4.chunk.js": "/LoopKitchenAssignment/static/js/787.1c799fe4.chunk.js",
     "static/media/Burger.png": "/LoopKitchenAssignment/static/media/Burger.7d5b4350b05565760c41.png",
     "static/media/RestaurantPlaceholder.svg": "/LoopKitchenAssignment/static/media/RestaurantPlaceholder.832da16836fa2c395defd83edd05f91f.svg",
     "index.html": "/LoopKitchenAssignment/index.html",
     "main.424060c6.css.map": "/LoopKitchenAssignment/static/css/main.424060c6.css.map",
-    "main.ddd692cd.js.map": "/LoopKitchenAssignment/static/js/main.ddd692cd.js.map",
+    "main.a0001fa0.js.map": "/LoopKitchenAssignment/static/js/main.a0001fa0.js.map",
     "787.1c799fe4.chunk.js.map": "/LoopKitchenAssignment/static/js/787.1c799fe4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.424060c6.css",
-    "static/js/main.ddd692cd.js"
+    "static/js/main.a0001fa0.js"
   ]
 }
