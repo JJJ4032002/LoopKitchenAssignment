@@ -26,10 +26,10 @@ const BrightnessIconWrapper = () => (
   </ListItemIcon>
 );
 const MenuData = [
-  { Title: "Home", Icon: HomeIconWrapper },
-  { Title: "Bookmarked", Icon: BookmarkIconWrapper },
-  { Title: "Light or Dark", Icon: BrightnessIconWrapper },
-  { Title: "Sign Out", Icon: SignOutIconWrapper },
+  { Title: "Home", Icon: HomeIconWrapper, to: "/home" },
+  { Title: "Bookmarked", Icon: BookmarkIconWrapper, to: "/bookmarked" },
+  { Title: "Light or Dark", Icon: BrightnessIconWrapper, to: null },
+  { Title: "Sign Out", Icon: SignOutIconWrapper, to: null },
 ];
 
 export { MenuData };
