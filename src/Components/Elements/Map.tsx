@@ -18,6 +18,10 @@ const Block = styled.div`
   flex-direction: column;
   gap: 0.5em;
 `;
+const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 0.5em;
+`;
 const BlockHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -26,9 +30,11 @@ const BlockHeader = styled.div`
 function Map({
   element,
   handleBookmark,
+  handleDelete,
 }: {
   element: addedRestaurantsDataType;
   handleBookmark: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
   return (
     <Block key={element.Id}>
@@ -37,13 +43,22 @@ function Map({
       ></Frame>
       <BlockHeader>
         <h2>{element.Name}</h2>
-        <Button
-          onClick={handleBookmark}
-          data-unique={`${element.Id}`}
-          variant="contained"
-        >
-          {element.Bookmarked ? "UnBookmark" : "Bookmark"}
-        </Button>
+        <ButtonWrapper>
+          <Button
+            variant="contained"
+            data-unique={`${element.Id}`}
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={handleBookmark}
+            data-unique={`${element.Id}`}
+            variant="contained"
+          >
+            {element.Bookmarked ? "UnBookmark" : "Bookmark"}
+          </Button>
+        </ButtonWrapper>
       </BlockHeader>
     </Block>
   );

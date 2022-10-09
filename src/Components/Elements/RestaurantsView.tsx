@@ -15,7 +15,7 @@ const RestaurantWrapper = styled.div`
 `;
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
   grid-auto-rows: 18rem;
   width: 100%;
   grid-gap: 3em 3em;
@@ -43,11 +43,13 @@ function RestaurantsView({
   RestaurantPlaceholder,
   handleBookmark,
   showBookmarked,
+  handleDelete,
 }: {
   AddedRestaurants: addedRestaurantsDataType[] | null;
   RestaurantPlaceholder: string;
   handleBookmark: (event: React.MouseEvent<HTMLButtonElement>) => void;
   showBookmarked: boolean;
+  handleDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }) {
   let BookmarkedArray = AddedRestaurants?.filter((element) => {
     return element.Bookmarked === true;
@@ -68,6 +70,7 @@ function RestaurantsView({
                   key={element.Id}
                   element={element}
                   handleBookmark={handleBookmark}
+                  handleDelete={handleDelete}
                 ></Map>
               );
             })
@@ -79,6 +82,7 @@ function RestaurantsView({
                     key={element.Id}
                     element={element}
                     handleBookmark={handleBookmark}
+                    handleDelete={handleDelete}
                   ></Map>
                 );
               })

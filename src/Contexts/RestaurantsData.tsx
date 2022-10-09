@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import { json } from "stream/consumers";
 import GetRestaurantsData, {
   NewRestaurantsDataType,
 } from "../helpers/GetRestaurantsData";
@@ -8,6 +7,7 @@ interface RestaurantsDataContextType {
   AddedRestaurants: addedRestaurantsDataType[] | null;
   AddToRestaurants: (obj: addedRestaurantsDataType) => void;
   handleBookmark: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  handleDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 interface addedRestaurantsDataType {
   Id: string;
@@ -19,6 +19,7 @@ let RestaurantsDataContext = createContext<RestaurantsDataContextType>({
   AddedRestaurants: [{ Id: "124", Name: "Hello", Bookmarked: true }],
   AddToRestaurants: () => {},
   handleBookmark: () => {},
+  handleDelete: () => {},
 });
 function RestaurantsData({ children }: { children: React.ReactNode }) {
   const [RestaurantsData, setRestaurantsData] = useState<
@@ -39,7 +40,16 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
   function EditAddedRestaurants(array: addedRestaurantsDataType[]) {
     setAddedRestaurants([...array]);
   }
-
+  function handleDelete(event: React.MouseEvent<HTMLButtonElement>) {
+    let elementId = event.currentTarget.getAttribute("data-unique");
+    if (addedRestaurants !== null) {
+      let newArray = addedRestaurants.filter((element) => {
+        return element.Id !== elementId;
+      });
+      EditAddedRestaurants(newArray);
+      AddRemoveToLocalStorage(newArray);
+    }
+  }
   function handleBookmark(event: React.MouseEvent<HTMLButtonElement>) {
     let elementId = event.currentTarget.getAttribute("data-unique");
     let Text = event.currentTarget.textContent;
@@ -55,15 +65,19 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
         }
       });
       EditAddedRestaurants(newArray);
-      let BookmarkedArray = newArray.filter((element) => {
-        return element.Bookmarked;
-      });
-      if (BookmarkedArray.length > 0) {
-        localStorage.removeItem("Bookmarked");
-        localStorage.setItem("Bookmarked", JSON.stringify(BookmarkedArray));
-      } else {
-        localStorage.removeItem("Bookmarked");
-      }
+      AddRemoveToLocalStorage(newArray);
+    }
+  }
+
+  function AddRemoveToLocalStorage(newArray: addedRestaurantsDataType[]) {
+    let BookmarkedArray = newArray.filter((element) => {
+      return element.Bookmarked;
+    });
+    if (BookmarkedArray.length > 0) {
+      localStorage.removeItem("Bookmarked");
+      localStorage.setItem("Bookmarked", JSON.stringify(BookmarkedArray));
+    } else {
+      localStorage.removeItem("Bookmarked");
     }
   }
   useEffect(() => {
@@ -96,6 +110,7 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
     AddedRestaurants: addedRestaurants,
     AddToRestaurants: AddToRestaurants,
     handleBookmark: handleBookmark,
+    handleDelete: handleDelete,
   };
   return (
     <RestaurantsDataContext.Provider value={ContextObj}>

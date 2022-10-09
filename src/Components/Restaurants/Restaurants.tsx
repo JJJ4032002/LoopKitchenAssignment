@@ -8,23 +8,16 @@ import { RestaurantsDataContext } from "../../Contexts/RestaurantsData";
 import RestaurantsView from "../Elements/RestaurantsView";
 import Map from "../Elements/Map";
 import { v4 as uuidv4 } from "uuid";
-import {
-  Heading,
-  Header,
-  RestaurantWrapper,
-  SearchBarWrapper,
-  Wrapper,
-  Placeholder,
-  Image,
-  Frame,
-  Block,
-  BlockHeader,
-  Grid,
-} from "./RestaurantsCss";
+import { Heading, Header, SearchBarWrapper, Wrapper } from "./RestaurantsCss";
 import { NewRestaurantsDataType } from "../../helpers/GetRestaurantsData";
 function Restaurants({ handleOpen }: { handleOpen: (state: boolean) => void }) {
-  let { Restaurants, AddedRestaurants, AddToRestaurants, handleBookmark } =
-    useContext(RestaurantsDataContext);
+  let {
+    Restaurants,
+    AddedRestaurants,
+    AddToRestaurants,
+    handleBookmark,
+    handleDelete,
+  } = useContext(RestaurantsDataContext);
   let [InputValue, setInputValue] = useState("");
   let [value, setValue] = useState<NewRestaurantsDataType | null>(null);
   let disableDrawer = useWindowSize();
@@ -106,6 +99,7 @@ function Restaurants({ handleOpen }: { handleOpen: (state: boolean) => void }) {
         RestaurantPlaceholder={RestaurantPlaceholder}
         handleBookmark={handleBookmark}
         showBookmarked={false}
+        handleDelete={handleDelete}
       ></RestaurantsView>
     </Wrapper>
   );

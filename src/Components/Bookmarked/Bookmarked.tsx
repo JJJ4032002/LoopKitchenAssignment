@@ -25,7 +25,9 @@ const Heading = styled.h1`
   color: ${(props) => props.theme.palette.primary.main};
 `;
 function Bookmarked({ handleOpen }: { handleOpen: (state: boolean) => void }) {
-  let { AddedRestaurants, handleBookmark } = useContext(RestaurantsDataContext);
+  let { AddedRestaurants, handleBookmark, handleDelete } = useContext(
+    RestaurantsDataContext
+  );
 
   let disableDrawer = useWindowSize();
   return (
@@ -50,6 +52,7 @@ function Bookmarked({ handleOpen }: { handleOpen: (state: boolean) => void }) {
           RestaurantPlaceholder={RestaurantPlaceholder}
           handleBookmark={handleBookmark}
           showBookmarked={true}
+          handleDelete={handleDelete}
         ></RestaurantsView>
       </Wrapper>
     </>
