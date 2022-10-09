@@ -10,6 +10,7 @@ import Home from "./Components/Home/Home";
 import Restaurants from "./Components/Restaurants/Restaurants";
 import { ThemeContext } from "./Contexts/Theme";
 import { RestaurantsData } from "./Contexts/RestaurantsData";
+import Bookmarked from "./Components/Bookmarked/Bookmarked";
 function App() {
   let location = useLocation();
   let { theme } = useContext(ThemeContext);
@@ -43,6 +44,10 @@ function App() {
                 <Route
                   path="home"
                   element={<Restaurants handleOpen={handleOpen}></Restaurants>}
+                ></Route>
+                <Route
+                  path="bookmarked"
+                  element={<Bookmarked handleOpen={handleOpen}></Bookmarked>}
                 ></Route>
               </Route>
             </Routes>
