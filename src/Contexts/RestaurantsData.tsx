@@ -6,7 +6,7 @@ interface RestaurantsDataContextType {
   Restaurants: NewRestaurantsDataType[] | null;
   AddedRestaurants: addedRestaurantsDataType[] | null;
   AddToRestaurants: (obj: addedRestaurantsDataType) => void;
-  EditAddedRestaurants: (state: addedRestaurantsDataType[]) => void;
+  handleBookmark: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 interface addedRestaurantsDataType {
   Id: string;
@@ -17,7 +17,7 @@ let RestaurantsDataContext = createContext<RestaurantsDataContextType>({
   Restaurants: [{ label: "Hello" }],
   AddedRestaurants: [{ Id: "124", Name: "Hello", Bookmarked: true }],
   AddToRestaurants: () => {},
-  EditAddedRestaurants: () => {},
+  handleBookmark: () => {},
 });
 function RestaurantsData({ children }: { children: React.ReactNode }) {
   const [RestaurantsData, setRestaurantsData] = useState<
@@ -38,6 +38,23 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
   function EditAddedRestaurants(array: addedRestaurantsDataType[]) {
     setAddedRestaurants([...array]);
   }
+
+  function handleBookmark(event: React.MouseEvent<HTMLButtonElement>) {
+    let elementId = event.currentTarget.getAttribute("data-unique");
+    let Text = event.currentTarget.textContent;
+    if (addedRestaurants !== null) {
+      let newArray = addedRestaurants.map((element) => {
+        if (element.Id === elementId && Text === "Bookmark") {
+          return { ...element, Bookmarked: true };
+        } else if (element.Id === elementId && Text === "UnBookmark") {
+          return { ...element, Bookmarked: false };
+        } else {
+          return { ...element };
+        }
+      });
+      EditAddedRestaurants(newArray);
+    }
+  }
   useEffect(() => {
     let ignore = false;
     GetRestaurantsData()
@@ -53,11 +70,12 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
       ignore = true;
     };
   }, []);
+
   let ContextObj = {
     Restaurants: RestaurantsData,
     AddedRestaurants: addedRestaurants,
     AddToRestaurants: AddToRestaurants,
-    EditAddedRestaurants: EditAddedRestaurants,
+    handleBookmark: handleBookmark,
   };
   return (
     <RestaurantsDataContext.Provider value={ContextObj}>
