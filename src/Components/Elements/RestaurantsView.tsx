@@ -64,16 +64,23 @@ function RestaurantsView({
       ) : (
         <Grid>
           {!showBookmarked ? (
-            AddedRestaurants.map((element) => {
-              return (
-                <Map
-                  key={element.Id}
-                  element={element}
-                  handleBookmark={handleBookmark}
-                  handleDelete={handleDelete}
-                ></Map>
-              );
-            })
+            AddedRestaurants.length === 0 ? (
+              <Placeholder>
+                <Image src={RestaurantPlaceholder} alt="" />
+                <Heading>No Restaurants added yet!</Heading>
+              </Placeholder>
+            ) : (
+              AddedRestaurants.map((element) => {
+                return (
+                  <Map
+                    key={element.Id}
+                    element={element}
+                    handleBookmark={handleBookmark}
+                    handleDelete={handleDelete}
+                  ></Map>
+                );
+              })
+            )
           ) : BookmarkedArray !== undefined ? (
             BookmarkedArray.length > 0 ? (
               BookmarkedArray.map((element) => {
