@@ -29,7 +29,7 @@ const MenuData = [
   { Title: "Home", Icon: HomeIconWrapper, to: "/home" },
   { Title: "Bookmarked", Icon: BookmarkIconWrapper, to: "/bookmarked" },
   { Title: "Light or Dark", Icon: BrightnessIconWrapper, to: null },
-  { Title: "Sign Out", Icon: SignOutIconWrapper, to: null },
+  { Title: "Sign Out", Icon: SignOutIconWrapper, to: "/login" },
 ];
 
 export { MenuData };
