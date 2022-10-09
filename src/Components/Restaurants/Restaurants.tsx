@@ -5,6 +5,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import useWindowSize from "../../hooks/useWindowSize";
 import Autocomplete from "@mui/material/Autocomplete";
 import { RestaurantsDataContext } from "../../Contexts/RestaurantsData";
+import RestaurantsView from "../Elements/RestaurantsView";
+import Map from "../Elements/Map";
 import { v4 as uuidv4 } from "uuid";
 import {
   Heading,
@@ -17,12 +19,12 @@ import {
   Frame,
   Block,
   BlockHeader,
+  Grid,
 } from "./RestaurantsCss";
 import { NewRestaurantsDataType } from "../../helpers/GetRestaurantsData";
 function Restaurants({ handleOpen }: { handleOpen: (state: boolean) => void }) {
-  let { Restaurants, AddedRestaurants, AddToRestaurants } = useContext(
-    RestaurantsDataContext
-  );
+  let { Restaurants, AddedRestaurants, AddToRestaurants, handleBookmark } =
+    useContext(RestaurantsDataContext);
   let [InputValue, setInputValue] = useState("");
   let [value, setValue] = useState<NewRestaurantsDataType | null>(null);
   let disableDrawer = useWindowSize();
@@ -48,6 +50,7 @@ function Restaurants({ handleOpen }: { handleOpen: (state: boolean) => void }) {
       setInputValue("");
     }
   }
+
   let disableButton = value !== null ? (value.label ? false : true) : true;
   return (
     <Wrapper>
@@ -97,26 +100,12 @@ function Restaurants({ handleOpen }: { handleOpen: (state: boolean) => void }) {
           Add
         </Button>
       </SearchBarWrapper>
-      <RestaurantWrapper>
-        {AddedRestaurants === null ? (
-          <Placeholder>
-            <Image src={RestaurantPlaceholder} alt="" />
-            <Heading>No Restaurants added yet!</Heading>
-          </Placeholder>
-        ) : (
-          <>
-            {AddedRestaurants.map((element) => {
-              return (
-                <Block key={element.Id}>
-                  <BlockHeader>
-                    <h2>{element.Name}</h2>
-                  </BlockHeader>
-                </Block>
-              );
-            })}
-          </>
-        )}
-      </RestaurantWrapper>
+      <RestaurantsView
+        AddedRestaurants={AddedRestaurants}
+        RestaurantPlaceholder={RestaurantPlaceholder}
+        handleBookmark={handleBookmark}
+        showBookmarked={false}
+      ></RestaurantsView>
     </Wrapper>
   );
 }
