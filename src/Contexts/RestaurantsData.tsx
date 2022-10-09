@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import { json } from "stream/consumers";
 import GetRestaurantsData, {
   NewRestaurantsDataType,
 } from "../helpers/GetRestaurantsData";
@@ -42,6 +43,7 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
   function handleBookmark(event: React.MouseEvent<HTMLButtonElement>) {
     let elementId = event.currentTarget.getAttribute("data-unique");
     let Text = event.currentTarget.textContent;
+
     if (addedRestaurants !== null) {
       let newArray = addedRestaurants.map((element) => {
         if (element.Id === elementId && Text === "Bookmark") {
@@ -53,6 +55,15 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
         }
       });
       EditAddedRestaurants(newArray);
+      let BookmarkedArray = newArray.filter((element) => {
+        return element.Bookmarked;
+      });
+      if (BookmarkedArray.length > 0) {
+        localStorage.removeItem("Bookmarked");
+        localStorage.setItem("Bookmarked", JSON.stringify(BookmarkedArray));
+      } else {
+        localStorage.removeItem("Bookmarked");
+      }
     }
   }
   useEffect(() => {
@@ -69,6 +80,15 @@ function RestaurantsData({ children }: { children: React.ReactNode }) {
     return () => {
       ignore = true;
     };
+  }, []);
+
+  useEffect(() => {
+    let RestaurantsFromLocalStorage = localStorage.getItem("Bookmarked");
+
+    if (RestaurantsFromLocalStorage !== null) {
+      let convertedFromString = JSON.parse(RestaurantsFromLocalStorage);
+      EditAddedRestaurants(convertedFromString);
+    }
   }, []);
 
   let ContextObj = {
