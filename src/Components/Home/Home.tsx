@@ -92,7 +92,7 @@ function Home({
                     </ListItemButton>
                   </ListItem>
                 ) : (
-                  <LinkTo to={element.to}>
+                  <LinkTo key={element.Title} to={element.to}>
                     <ListItem
                       onClick={
                         element.Title === "Light or Dark"
