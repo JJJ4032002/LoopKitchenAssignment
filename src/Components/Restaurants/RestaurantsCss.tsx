@@ -30,7 +30,6 @@ const Wrapper = styled.div`
 `;
 const SearchBarWrapper = styled.div`
   width: 100%;
-  justify-content: center;
   display: flex;
   gap: 1em;
   align-items: center;

@@ -74,6 +74,7 @@ function Restaurants({ handleOpen }: { handleOpen: (state: boolean) => void }) {
           <Autocomplete
             disablePortal
             options={Restaurants}
+            sx={{ width: "100%" }}
             value={value}
             onChange={handleValueChange}
             inputValue={InputValue}
@@ -81,7 +82,7 @@ function Restaurants({ handleOpen }: { handleOpen: (state: boolean) => void }) {
             renderInput={(params) => (
               <TextField
                 {...params}
-                sx={{ width: "350px", textAlign: "center" }}
+                sx={{ width: "100%", textAlign: "center" }}
                 hiddenLabel
                 placeholder="Search Restaurants"
                 variant="standard"
